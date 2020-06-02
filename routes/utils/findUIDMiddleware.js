@@ -12,7 +12,7 @@ module.exports = ( req, res, next ) => {
     return;
   }
   
-  res.logger.info( "uid from middleware", uid );
+  console.log( "uid from middleware", uid );
   UserDb.findBy( { uid } )
     .then( user => {
       if( user.length > 0 ){
