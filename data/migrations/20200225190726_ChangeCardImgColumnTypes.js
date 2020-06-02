@@ -10,5 +10,7 @@ exports.down = function( knex ){
     tbl.dropColumn( "image_front" );
     
     tbl.dropColumn( "image_back" );
+    tbl.binary( "image_front" );
+    tbl.binary( "image_back" );
   } );
 };
