@@ -19,7 +19,7 @@
 
 # API Documentation
 
-####  Backend deployed at [Heroku](production: https://production-lambda-synaps-be.herokuapp.com/) <br>
+####  Backend deployed at [Heroku](production: https://https://synaps-backend.herokuapp.com/) <br>
 
 ## Getting started
 
