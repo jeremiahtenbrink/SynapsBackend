@@ -40,7 +40,7 @@ server.use( "/api", ( req, res ) => {
   return res.status( 200 ).json( { message: "Server up and running" } );
 } );
 
-server.use( "/", express.static( "apidoc" ) );
+server.use( "/", express.static( apiDocsPath ) );
 server.use( logErrors, clientErrorHandler, errorHandler );
 
 module.exports = server;
