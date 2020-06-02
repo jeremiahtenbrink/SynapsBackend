@@ -55,16 +55,16 @@ router.post( "/upload", multerUploads, ( req, res, next ) => {
   if( req.file ){
     res.logger.info( "We have located the file in memory.", moduleName );
     const file = dataUri( req ).content;
-    return uploader.upload( file ).then( ( result ) => {
+    return uploader.upload( file ).then( async( result ) => {
       res.logger.info( "File uploaded to cloudinary.", moduleName );
       
       const public_id = result.public_id + "." + result.format;
       const photo_url = url( public_id, {
-        width: 265, height: 265, crop: "fill"
+        width: 265, height: 265, crop: "fill",
       } );
       const photo = { public_id, photo_url };
       res.logger.info( photo );
-      let saved = photos.add( photo );
+      let saved = await photos.add( photo );
       if( saved ){
         res.logger.info( "Photo saved in the db.", moduleName );
         res.status( 201 ).json( { photo } );
@@ -72,22 +72,22 @@ router.post( "/upload", multerUploads, ( req, res, next ) => {
         res.logger.errorMessage( "Photo did not save in the db.", moduleName );
         next( createError( 500,
           "/api/photos/uploads",
-          "Failed to located" + " the image."
+          "Failed to located" + " the image.",
         ) );
       }
     } ).catch( ( err ) => {
       res.logger.errorMessage( "Photo upload to cloudinary failed.",
-        moduleName
+        moduleName,
       );
       next( createError( err.status || 500,
         "/api/photos/uploads",
         err.message,
-        err
+        err,
       ) );
     } );
   }else{
     res.logger.errorMessage( "We did not receive a file to be uploaded.",
-      moduleName
+      moduleName,
     );
     next( createError( 400, "/api/photos/uploads", "No file uploaded" ) );
   }
@@ -137,7 +137,7 @@ router.delete( "/upload/:public_url", ( req, res, next ) => {
   
   const { public_id } = req.params;
   res.logger.info( moduleName,
-    `Delteing image ${ public_id } from the bucket.`
+    `Delteing image ${ public_id } from the bucket.`,
   );
   
 } );
