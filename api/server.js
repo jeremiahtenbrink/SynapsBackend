@@ -36,11 +36,11 @@ server.use( "/api/decks", findUIDMiddleWare, decksRouter );
 server.use( "/api/cards", findUIDMiddleWare, cardsRouter );
 server.use( "/api/photo", findUIDMiddleWare, photoRouter );
 server.use( "/api", ( req, res ) => {
-    console.log( "inside of server up message" );
-    return res.status( 200 ).json( { message: "Server up and running" } );
+  console.log( "inside of server up message" );
+  return res.status( 200 ).json( { message: "Server up and running" } );
 } );
 
-server.use( "/", express.static( apiDocsPath ) );
+server.use( "/", express.static( "apidoc" ) );
 server.use( logErrors, clientErrorHandler, errorHandler );
 
 module.exports = server;
