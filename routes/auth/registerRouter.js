@@ -35,12 +35,18 @@ const Users = require( "../users/users-model.js" );
  */
 
 router.post( "/", ( req, res ) => {
-    let newUser = req.body;
-    Users.add( newUser )
-        .then( user => res.status( 201 ).json( user ) )
-        .catch( err => res
-            .status( 501 )
-            .json( { message: "error adding the user", error: err.message } ) );
+  let newUser = req.body;
+  Users.add( newUser )
+    .then( user => {
+      res.logger.info( "Registered a user with uid: " + user.user_id );
+      res.status( 201 ).json( user );
+    } )
+    .catch( err => {
+      res.logger.error( err );
+      res
+        .status( 501 )
+        .json( { message: "error adding the user", error: err.message } );
+    } );
 } );
 
 module.exports = router;
