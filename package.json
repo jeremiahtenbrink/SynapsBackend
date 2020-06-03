@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "migrate": "knex migrate:latest --env production",
+    "rollback": "knex migrate:rollback --env production",
     "server": "nodemon index.js",
-    "test": "cross-env NODE_ENV=test jest --testTimeout=10000 --coverage --watch",
+    "watch": "cross-env NODE_ENV=test jest --testTimeout=10000 --coverage --watch",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000 --coverage",
     "start": "node index.js",
     "api-docs": "apidoc -f .js -i ./routes -o apidoc/",
     "api-docs-staging": "apidoc -c staging -f .js -i ./routes -o doc-staging/",
     "api-docs-prod": "apidoc -c production -f .js -i ./routes -o doc-prod/",
-    "build": "npm-run-all api-docs-staging api-docs-prod",
+    "build": "npm-run-all  api-docs-staging api-docs-prod migrate",
     "coverage": "jest --coverage --detectOpenHandles --forceExit --passWithNoTests || true"
   },
   "repository": {
@@ -46,7 +48,7 @@
     "cross-env": "^6.0.3",
     "eslint": "^6.8.0",
     "eslint-plugin-jest": "^23.8.2",
-    "jest": "^24.9.0",
+    "jest": "^26.0.1",
     "nodemon": "^2.0.2",
     "supertest": "^4.0.2"
   },

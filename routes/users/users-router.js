@@ -1,8 +1,8 @@
-const router = require("express").Router();
+const router = require( "express" ).Router();
 const DEBUG_NAME = "USERS";
 
-const Users = require("./users-model.js");
-const createError = require("../utils/createError");
+const Users = require( "./users-model.js" );
+const createError = require( "../utils/createError" );
 
 /**
  * @api {get} /api/users/me    Gets current user
@@ -11,9 +11,9 @@ const createError = require("../utils/createError");
  * @apiGroup Users
  *
  * @apiHeader {String} auth  Users google uid.
- * 
+ *
  * @apiHeaderExample  {json}  Header Example:
- * 
+ *
  * {
  *  "auth": "321sdf516156s"
  * }
@@ -38,13 +38,13 @@ const createError = require("../utils/createError");
 }
  *
  */
-router.get("/me", (req, res) => {
+router.get( "/me", ( req, res ) => {
   const user = req.user;
-  if (user) {
-    res.logger.success(DEBUG_NAME, "Returning user");
-    return res.status(200).json(user);
+  if( user ){
+    res.logger.success( DEBUG_NAME, "Returning user" );
+    return res.status( 200 ).json( user );
   }
-});
+} );
 
 /**
  * @api {get} /api/users/all     Gets all users
@@ -53,13 +53,13 @@ router.get("/me", (req, res) => {
  * @apiGroup Users
  *
  * @apiHeader {String} auth  Users google uid.
- * 
+ *
  * @apiHeaderExample  {json}  Header Example:
- * 
+ *
  * {
  *  "auth": "321sdf516156s"
  * }
- * 
+ *
  * @apiExample Request example:
  * const request = axios.create({
  *     baseURL: 'http://localhost:5000/',
@@ -90,15 +90,16 @@ router.get("/me", (req, res) => {
  *
  */
 
-router.get("/all", (req, res) => {
+router.get( "/all", ( req, res ) => {
   Users.getAll()
-    .then(users => {
-      res.json(users);
-    })
-    .catch(err => {
-      res.status(500).json({ message: "There was an error getting users." });
-    });
-});
+    .then( users => {
+      res.json( users );
+    } )
+    .catch( err => {
+      res.status( 500 )
+        .json( { message: "There was an error getting users." } );
+    } );
+} );
 
 /**
  * @api  {put} /api/users   Edits an existing user
@@ -141,30 +142,31 @@ router.get("/all", (req, res) => {
  * }
  */
 
-router.put("/", (req, res) => {
+router.put( "/", ( req, res ) => {
   const user = req.user;
   const changes = req.body;
-  console.log("changes from PUT", changes);
-  console.log("user from PUT", changes);
-  Users.update(user.user_id, changes)
-    .then(user => {
-      res.status(201).json(user);
-    })
-    .catch(error => {
+  res.logger.info( "changes from PUT", changes );
+  res.logger.info( "user from PUT", changes );
+  Users.update( user.user_id, changes )
+    .then( user => {
+      res.status( 201 ).json( user );
+    } )
+    .catch( error => {
       // log error to database
-      console.log(error);
-      res.status(501).json({
-        message: "Error updating the user."
-      });
-    });
-});
+      res.logger.errorMessage( error );
+      res.logger.error( error );
+      res.status( 501 ).json( {
+        message: "Error updating the user.",
+      } );
+    } );
+} );
 
 /**
  * @api {delete} /api/users     Delete an existing user.
  * @apiVersion 1.0.0
  * @apiName DeleteUser
  * @apiGroup Users
-
+ 
  * @apiHeader {String} auth  Users google uid.
  *
  * @apiHeaderExample  {json}  Header Example:
@@ -187,19 +189,19 @@ router.put("/", (req, res) => {
  * { message: "The user has been removed" }
  */
 
-router.delete("/", (req, res) => {
+router.delete( "/", ( req, res ) => {
   const user = req.user;
-  Users.remove(user.user_id)
-    .then(count => {
-      res.status(203).json({ message: "The user has been removed" });
-    })
-    .catch(error => {
+  Users.remove( user.user_id )
+    .then( count => {
+      res.status( 203 ).json( { message: "The user has been removed" } );
+    } )
+    .catch( error => {
       // log error to database
-      console.log(error);
-      res.status(503).json({
-        message: "Error removing the user"
-      });
-    });
-});
+      res.logger.error( error );
+      res.status( 503 ).json( {
+        message: "Error removing the user",
+      } );
+    } );
+} );
 
 module.exports = router;

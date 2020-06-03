@@ -1,6 +1,33 @@
+<h1 align="center">
+    <a href="https://production-lambda-synaps-be.herokuapp.com/">Synaps Backend
+    </a>
+</h1>
+<h3 align="center">Up you testing game with the best flash card app.</h3>
+<h3 align="center">Average testing score increase 20%.</h3>
+
+
+
+<br/>
+<br/>
+<h1>
+    Project Overview
+</h1>
+
+To create the best Life Science flashcard application, that has excellent UI, which has minimal distractions to make the learning process more efficient. To be the best user friendly flashcard application for life sciences students.
+
 
 ## Contributors
 
+   <h1 align="center">UI/UX</h1> 
+   <div width="100%">
+        <img src="https://avatars0.githubusercontent.com/u/48630065?s=460&v=4" width = "100" text-align="center" /> 
+        <img src="https://avatars3.githubusercontent.com/u/49910197?v=4" width = "100" text-align="center" />
+   </div>
+
+(https://github.com/nataliepeterson)
+(https://github.com/DKFerebee)
+
+## Web Developers
 [<img src="https://avatars3.githubusercontent.com/u/17443353?v=4" width = "100" />](https://github.com/jeremiahtenbrink)
 [<img src="https://avatars1.githubusercontent.com/u/19153270?v=4" width = "100" />](https://github.com/ccurry20)
 [<img src="https://avatars2.githubusercontent.com/u/20153709?v=4" width = "100" />](https://github.com/gmgower)
@@ -17,17 +44,19 @@
 [![Code Climate maintainability](https://api.codeclimate.com/v1/badges/9ca9673d076f0a3275bb/maintainability)](https://img.shields.io/codeclimate/maintainability-percentage/Lambda-School-Labs/pt-synaps-be)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/9ca9673d076f0a3275bb/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/pt-synaps-be/test_coverage)
 
-# API Documentation
+<h1 align="center">
+    <a href="https://production-lambda-synaps-be.herokuapp.com/">Api
+     Documentation.
+    </a>
+</h1>
 
-####  Backend deployed at [Heroku](production: https://production-lambda-synaps-be.herokuapp.com/) <br>
+#### Backend delpoyed at [Heroku](https://production-lambda-synaps-be.herokuapp.com) <br>
 
 ## Getting started
 
-To get the server running locally:
-
 - Clone this repo
 - **npm install** to install all required dependencies
-- **npm run start** to start the local server
+- **npm server** to start the local server
 - **npm test** to start server using testing environment
 
 ### Backend framework goes here
@@ -36,36 +65,25 @@ Node:  Express, Postgres
 
 - Node.js - We chose this to improve the efficiency and overall developer productivity. This is also excellent use for code sharing and reusability. Even greater benefits are the speed and the performance thanks to Node. With this we use the Express.js to allow us to build the app in the most efficient way.
 
+## Environment Variables
 
-## Endpoints
-
-Refer to the link below:
-
-https://staging-lambda-synaps-be.herokuapp.com  
-#### User Routes
-
-Refer to the link below:
-
-https://staging-lambda-synaps-be.herokuapp.com                                                   |
-
-# Data Model
-
-[<img src="https://github.com/Lambda-School-Labs/pt-synaps-be/blob/read-me/images/Untitled.png?raw=true" width = "500" />]()
-
-#### ORGANIZATIONS
-
----
-https://www.notion.so/PT-Synaps-26b2ed3daf324476b32334ccd4c0d847
-
-#### USERS
-
-Please refer to this link below
-
-https://staging-lambda-synaps-be.herokuapp.com/
-
-
+|VAR        | Description        |
+|:------------- |:-------------|
+| DB_ENV    | production, staging, development, test -> Sets the Db env from the kenexfile. |
+| DATABASE    | Database name for local development |
+| USER      | Local DB user      |
+| PASSWORD      | Local DB user password     |
+| DATABASE_PORT      | Local DB port   |
+| LOG_LEVEL | Set to debug to have logs print debug info.     |
+| DOCS_PATH | Path to document folder for env.   |
+| CLOUDINARY_CLOUD_NAME | Image upload storage bucket cloud name   |
+| CLOUDINARY_API_KEY | Image storage bucket api key    |
+| CLOUDINARY_API_SECRET | Image storage bucket api secret.   |
+| Github-Secret CodeClimateReporterId | Code Climate Reporters id for code coverage.   |
+| REACT_APP_BASE_URL | Base url for    |
 
 ## Environment Variables
+
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
