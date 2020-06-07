@@ -8,9 +8,7 @@ const Decks = require( "./decks-model.js" );
  * @apiVersion 1.0.0
  * @apiName CreateNewDeck
  * @apiGroup Decks
- *
  * @apiHeader {String} auth  Users google uid.
- *
  * @apiHeaderExample  {json}  Header Example:
  *
  * {
@@ -18,11 +16,9 @@ const Decks = require( "./decks-model.js" );
  * }
  *
  * @apiParam  {String}    deck_name name of new deck
- *
  * @apiParam  {String}      [tags]      List of tags separated by ","
- *
  * @apiParam  {Boolean}     [public]    Does user want this to be seen/visible
- *     to others?
+ * @apiParam  {Boolean}     [favorite]  Is this deck a users fav.
  *
  * @apiExample Request example:
  * const request = axios.create({
@@ -42,7 +38,8 @@ const Decks = require( "./decks-model.js" );
  *    "created_at": "2020-02-18 14:10:08.566262-07",
  *    "updated_at": "2020-02-18 14:10:08.566262-07",
  *    "tags": "limbs,skull,hands",
- *    "public": false
+ *    "public": false,
+ *    "favorite": false,
  * }
  *
  *
@@ -52,7 +49,7 @@ router.post( "/", ( req, res ) => {
   let user = req.user;
   let newDeck = req.body;
   newDeck.user_id = user.user_id;
-  
+  res.logger.info( "posting new deck to db", newDeck );
   Decks.add( newDeck )
     .then( deck => res.status( 201 ).json( deck ) )
     .catch( err => {
@@ -95,7 +92,8 @@ router.post( "/", ( req, res ) => {
  *    "created_at": "2020-02-18 14:10:08.566262-07",
  *    "updated_at": "2020-02-18 14:10:08.566262-07",
  *    "tags": "limbs,skull,hands",
- *    "public": false
+ *    "public": false,
+ *    "favorite": false
  *  },
  *  {
  *    "deck_name": "random"
@@ -104,7 +102,8 @@ router.post( "/", ( req, res ) => {
  *    "created_at": "2020-02-20 14:10:08.566262-07",
  *    "updated_at": "2020-02-20 14:10:08.566262-07",
  *    "tags": "random,text,here",
- *    "public": true
+ *    "public": true,
+ *    "favorite": false
  *  },
  *  ...
  * ]
@@ -116,6 +115,8 @@ router.get( "/", ( req, res ) => {
       res.json( Decks );
     } )
     .catch( error => {
+      res.logger.errorMessage( "get from db failed" );
+      res.logger.error( error );
       res.status( 500 )
         .json( { message: "There was an error getting Decks." } );
     } );
@@ -128,7 +129,6 @@ router.get( "/", ( req, res ) => {
  * @apiGroup Decks
  *
  * @apiHeader {String} auth  Users google uid.
- *
  * @apiHeaderExample  {json}  Header Example:
  *
  * {
@@ -154,7 +154,8 @@ router.get( "/", ( req, res ) => {
         "updated_at": "2020-03-09 14:32:23.288908-06",
         "deck_name": "Some Deck",
         "tags": null,
-        "public": null
+        "public": null,
+        "favorite": false
     },
  {
         "deck_id": 3,
@@ -163,7 +164,8 @@ router.get( "/", ( req, res ) => {
         "updated_at": "2020-03-09 14:32:34.776917-06",
         "deck_name": "Another Deck",
         "tags": null,
-        "public": null
+        "public": null,
+        "favorite": false
     }
  ]
  */
@@ -194,7 +196,6 @@ router.get( "/user", ( req, res ) => {
  * @apiGroup Decks
  *
  * @apiHeader {String} auth  Users google uid.
- *
  * @apiHeaderExample  {json}  Header Example:
  *
  * {
@@ -211,7 +212,6 @@ router.get( "/user", ( req, res ) => {
  *
  *
  * @apiUse  Error
- *
  * @apiSuccessExample Deck Data
  *
  * {
@@ -221,7 +221,8 @@ router.get( "/user", ( req, res ) => {
  *    "created_at": "2020-02-18 14:10:08.566262-07",
  *    "updated_at": "2020-02-18 14:10:08.566262-07",
  *    "tags": "limbs,skull,hands",
- *    "public": false
+ *    "public": false,
+ *    "favorite": false
  * }
  *
  *
@@ -246,6 +247,8 @@ router.get( "/:id", ( req, res ) => {
       } );
     } );
 } );
+
+
 
 /**
  * @api {put} /api/decks/:deck_id   Edits single deck
@@ -286,7 +289,8 @@ router.get( "/:id", ( req, res ) => {
  *    "created_at": "2020-02-18 14:10:08.566262-07",
  *    "updated_at": "2020-02-18 14:10:08.566262-07",
  *    "tags": "limbs,skull,hands",
- *    "public": true
+ *    "public": true,
+ *    "favorite": false
  * }
  *
  */

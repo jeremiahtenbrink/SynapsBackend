@@ -38,7 +38,7 @@ router.post( "/", ( req, res ) => {
   let newUser = req.body;
   Users.add( newUser )
     .then( user => {
-      res.logger.info( "Registered a user with uid: " + user.user_id );
+      res.logger.info( "Registered a user with uid: " + newUser.user_id );
       res.status( 201 ).json( user );
     } )
     .catch( err => {
